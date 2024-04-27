@@ -1,0 +1,29 @@
+name: Python app
+
+on:
+  # Define when the workflow should be triggered
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout (GitHub)
+      uses: actions/checkout@v3
+
+    - name: Login to GitHub Container Registry
+      uses: docker/login-action@v2
+      with:
+        registry: ghcr.io
+        username: ${{ github.repository_owner }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Build and run dev container task
+      uses: devcontainers/ci@v0.2
+      with:
+        imageName: ghcr.io/${{ github.repository_owner }}/devcontainer
+        runCmd: pytest .
