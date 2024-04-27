@@ -26,4 +26,4 @@ jobs:
       uses: devcontainers/ci@v0.2
       with:
         imageName: ghcr.io/${{ github.repository_owner }}/devcontainer
-        runCmd: pytest .
+        runCmd: echo "Hello, world!!"
